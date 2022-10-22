@@ -17,19 +17,9 @@ export function withInitialPropsWhenMount({
         const location = useLocation()
         const navigate = useNavigate()
 
-        const shouldLoadInitialProps = useMemo(
-            function checkShouldLoadInitialProps() {
-                let routedPath = path.replace(/\/$/, '') || '/'
-                for (const value of Object.values(params)) {
-                    if (value) {
-                        routedPath = routedPath.replace(/:[a-zA-Z0-9]+/, value)
-                    }
-                }
-                const isRouterMatch = routedPath === location.pathname
-                return Boolean(getInitialProps) && isRouterMatch
-            },
-            [params, location.pathname],
-        )
+        const shouldLoadInitialProps = useMemo(function checkShouldLoadInitialProps() {
+            return Boolean(getInitialProps)
+        }, [])
 
         useEffect(
             function getInitialPropsWhenPageMount() {
