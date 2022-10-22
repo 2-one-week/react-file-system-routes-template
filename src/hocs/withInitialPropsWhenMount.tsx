@@ -82,7 +82,7 @@ export function withInitialPropsWhenMount({
         // getInitialProps가 있는 경우, 로딩 여부 확인
         const readyToRender = shouldLoadInitialProps && props
         if (!readyToRender) {
-            return LoadingComponent ? <LoadingComponent /> : <p>Loading...</p>
+            return LoadingComponent ? <LoadingComponent /> : null
         }
 
         // getInitialProps를 가지고 와서 props 주입
