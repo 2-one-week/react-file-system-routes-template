@@ -3,12 +3,11 @@ import {useEffect, useMemo, useState} from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 
 export function withInitialPropsWhenMount({
-    path,
-    page: Page,
+    component: Component,
     loading: LoadingComponent,
     getInitialProps,
 }: PagesWithPath) {
-    function PageWithInitialProps() {
+    function ComponentWithInitialProps() {
         // Page에 주입될 Props
         const [props, setProps] = useState<any>(null)
 
@@ -22,7 +21,7 @@ export function withInitialPropsWhenMount({
         }, [])
 
         useEffect(
-            function getInitialPropsWhenPageMount() {
+            function getInitialPropsWhenComponentMount() {
                 async function loadInitialProps() {
                     if (!shouldLoadInitialProps || !getInitialProps) {
                         return
@@ -58,15 +57,15 @@ export function withInitialPropsWhenMount({
             [shouldLoadInitialProps], // eslint-disable-line react-hooks/exhaustive-deps
         )
 
-        if (!Page) {
+        if (!Component) {
             throw new Error(
-                '[Dynamic Routes]: 페이지가 설정되어있지 않습니다. export default Component를 내보내주세요.',
+                '[GetInitialPropsError]: Component가 설정되어있지 않습니다. export default Component를 내보내주세요.',
             )
         }
 
         // getInitialProps가 없는 경우, 그냥 페이지 렌더링
         if (!shouldLoadInitialProps) {
-            return <Page />
+            return <Component />
         }
 
         // getInitialProps가 있는 경우, 로딩 여부 확인
@@ -76,7 +75,7 @@ export function withInitialPropsWhenMount({
         }
 
         // getInitialProps를 가지고 와서 props 주입
-        return <Page {...props} />
+        return <Component {...props} />
     }
-    return PageWithInitialProps
+    return ComponentWithInitialProps
 }

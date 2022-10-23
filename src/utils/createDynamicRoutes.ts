@@ -46,7 +46,7 @@ export function createDynamicRoutes(): DynamicRoutes {
                     .join('/')
                     // /index route 제거
                     .replace(/\/index/g, '') || '/'
-            return {path, page, ...pageInfo}
+            return {path, component: page, ...pageInfo}
         },
     )
 

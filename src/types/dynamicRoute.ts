@@ -46,5 +46,5 @@ export type PageInfos = {
 
 export type PagesWithPath = {
     path: string
-    page: Page
+    component: Page
 } & PageInfos
