@@ -1,3 +1,4 @@
+import {Sample} from '$components/Sample'
 import {GetInitialProps} from '$types/getInitialProps'
 
 type RootPageProps = {
@@ -10,6 +11,7 @@ function RootPage({sample, 소개메세지}: RootPageProps) {
         <div>
             <p>root index page {sample}</p>
             <p>{소개메세지}</p>
+            <Sample />
         </div>
     )
 }
