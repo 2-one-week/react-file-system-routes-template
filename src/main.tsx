@@ -1,5 +1,5 @@
 import {Fragment, useMemo} from 'react'
-import {createRoot} from 'react-dom/client'
+import {createRoot, hydrateRoot} from 'react-dom/client'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 import {withInitialPropsWhenMount} from '$hocs/withInitialPropsWhenMount'
@@ -21,6 +21,14 @@ function DynamicRoutes() {
     )
 }
 
+function App() {
+    return (
+        <BrowserRouter>
+            <DynamicRoutes />
+        </BrowserRouter>
+    )
+}
+
 let rootElement: HTMLElement | null = null
 
 function initializeReactApp() {
@@ -29,11 +37,11 @@ function initializeReactApp() {
         rootElement = document.getElementById('root')
         if (rootElement) {
             const root = createRoot(rootElement)
-            root.render(
-                <BrowserRouter>
-                    <DynamicRoutes />
-                </BrowserRouter>,
-            )
+            root.render(<App />)
+        }
+    } else {
+        if (rootElement) {
+            hydrateRoot(rootElement, <App />)
         }
     }
 }
