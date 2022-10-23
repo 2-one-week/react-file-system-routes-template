@@ -2,6 +2,8 @@
 
 React App에서 Next.js 처럼 page 폴더 구조를 사용하기 위한 프로젝트입니다.
 
+-   배포 URL : https://gleaming-basbousa-325e5a.netlify.app/
+
 ### Dynamic Routing
 
 -   페이지가 추가되거나, 삭제될 때 마다 Route를 매번 쓰기 귀찮은 문제를 해결할 수 있습니다.
