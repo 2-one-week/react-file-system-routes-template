@@ -1,4 +1,4 @@
-import {GetInitialProps} from '$types/dynamicRoute'
+import {GetInitialProps} from '$types/getInitialProps'
 import {useCallback} from 'react'
 import {useNavigate} from 'react-router-dom'
 

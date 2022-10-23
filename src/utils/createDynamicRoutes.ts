@@ -1,5 +1,5 @@
 import {Fragment} from 'react'
-import {ChildrenWrapper, Page, PageInfos, PagesWithPath} from 'types/dynamicRoute'
+import {ChildrenWrapper, Page, PageInfos, PagesWithPath} from '$types/getInitialProps'
 
 type DynamicRoutes = {Provider: ChildrenWrapper; NotFound: Page | null; Pages: PagesWithPath[]}
 

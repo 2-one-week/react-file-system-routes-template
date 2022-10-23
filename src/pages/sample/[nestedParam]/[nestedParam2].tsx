@@ -1,4 +1,4 @@
-import {GetInitialProps} from '$types/dynamicRoute'
+import {GetInitialProps} from '$types/getInitialProps'
 import {useParams} from 'react-router-dom'
 
 type NestedParam2PageProps = {

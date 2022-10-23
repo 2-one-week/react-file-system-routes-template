@@ -1,4 +1,4 @@
-import {GetInitialProps} from '$types/dynamicRoute'
+import {GetInitialProps} from '$types/getInitialProps'
 
 /**
  * @description initialProps에서 notFound page로 redirect 시킬 수 있습니다.

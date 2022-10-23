@@ -1,4 +1,4 @@
-import {GetInitialProps} from '$types/dynamicRoute'
+import {GetInitialProps} from '$types/getInitialProps'
 
 type JsonIDPageProps = {
     body: string
