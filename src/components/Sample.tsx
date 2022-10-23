@@ -18,7 +18,7 @@ const getInitialProps: GetInitialProps = () => {
         setTimeout(() => {
             resolve({
                 props: {
-                    text: '이거 initialProps 되나요?',
+                    text: '이거 initialProps 되나요? (컴포넌트에서도 withInitialProps 사용 가능합니다.)',
                 },
             })
         }, 3000)
