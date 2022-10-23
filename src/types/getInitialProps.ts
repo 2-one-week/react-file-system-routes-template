@@ -5,7 +5,7 @@ export type ChildrenProps = {children: ReactNode}
 
 export type ChildrenWrapper = ExoticComponent<ChildrenProps>
 
-export type Page = () => JSX.Element // eslint-disable-line no-undef
+export type Page = (props: any) => JSX.Element // eslint-disable-line no-undef
 
 export type GetInitialPropsArgs<ParamsOrKey> = {
     params: Readonly<[ParamsOrKey] extends [string] ? Params<ParamsOrKey> : Partial<ParamsOrKey>>
@@ -45,6 +45,6 @@ export type PageInfos = {
 }
 
 export type PagesWithPath = {
-    path: string
+    path?: string
     component: Page
 } & PageInfos
