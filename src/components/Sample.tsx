@@ -25,4 +25,4 @@ const getInitialProps: GetInitialProps = () => {
     })
 }
 
-export const Sample = withInitialPropsWhenMount({component: SampleComponent, loading, getInitialProps})
+export const Sample = withInitialPropsWhenMount({component: SampleComponent, loading, getInitialProps, force: true})
