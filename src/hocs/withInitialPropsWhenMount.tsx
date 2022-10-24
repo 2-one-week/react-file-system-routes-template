@@ -1,5 +1,5 @@
 import {PagesWithPath} from '$types/getInitialProps'
-import {useEffect, useMemo, useState} from 'react'
+import {memo, useEffect, useMemo, useRef, useState} from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 
 export function withInitialPropsWhenMount({
@@ -7,7 +7,8 @@ export function withInitialPropsWhenMount({
     loading: LoadingComponent,
     getInitialProps,
 }: PagesWithPath) {
-    function ComponentWithInitialProps() {
+    // Page에 props가 한번 주입되면, 값 캐싱
+    const ComponentWithInitialProps = memo(function ComponentWithInitialProps() {
         // Page에 주입될 Props
         const [props, setProps] = useState<any>(null)
 
@@ -76,6 +77,6 @@ export function withInitialPropsWhenMount({
 
         // getInitialProps를 가지고 와서 props 주입
         return <Component {...props} />
-    }
+    })
     return ComponentWithInitialProps
 }
