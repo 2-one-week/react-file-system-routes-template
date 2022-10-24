@@ -34,18 +34,17 @@ export function createDynamicRoutes(): DynamicRoutes {
 
     const Pages: PagesWithPath[] = Object.entries(DynamicPages).map(
         ([fileAbsolutePath, {default: page, ...pageInfo}]) => {
-            const path =
-                fileAbsolutePath
-                    // page prefix 제거
-                    .replace(/^\/src\/pages/, '')
-                    // .tsx postfix제거
-                    .replace(/.tsx$/, '')
-                    // params [id] > :id로 변경
-                    .split('/')
-                    .map((value) => value.replace(/^\[(.+)\]$/, ':$1'))
-                    .join('/')
-                    // /index route 제거
-                    .replace(/\/index/g, '') || '/'
+            const path = fileAbsolutePath
+                // page prefix 제거
+                .replace(/^\/src\/pages/, '')
+                // .tsx postfix제거
+                .replace(/.tsx$/, '')
+                // params [id] > :id로 변경
+                .split('/')
+                .map((value) => value.replace(/^\[(.+)\]$/, ':$1'))
+                .join('/')
+                // /index route 제거
+                .replace(/\/index$/g, '/')
             return {path, component: page, ...pageInfo}
         },
     )
