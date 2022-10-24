@@ -31,8 +31,11 @@ function RootPage({sample, 소개메세지}: RootPageProps) {
                 <Link to="/sample/1">
                     <li>/sample/[특정아이디] 예시 페이지로 (path = "/sample/[id]")</li>
                 </Link>
-                <Link to="/sample/nested/nested">
-                    <li>/sample/nested/nested 폴더 nested route 예시 페이지로 (path = "/nested/nested")</li>
+                <Link to="/sample/nested/nested" state={{text: {main: 'Link State도 이동 가능'}}}>
+                    <li>
+                        /sample/nested/nested 폴더 nested route 예시 페이지로 (path = "/nested/nested")
+                        <p>react router dom link state 도 같이 넘어갑니다.</p>
+                    </li>
                 </Link>
                 <Link to="/sample/123/123">
                     <li>
