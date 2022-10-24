@@ -2,11 +2,14 @@ import {PagesWithPath} from '$types/getInitialProps'
 import {memo, useEffect, useMemo, useRef, useState} from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
 
+const componentPropsCache = new Map<string, any>()
+
 export function withInitialPropsWhenMount({
     component: Component,
     loading: LoadingComponent,
     getInitialProps,
-}: PagesWithPath) {
+    force: forceToGetInitialProps = false,
+}: PagesWithPath & {force?: boolean}) {
     // Page에 props가 한번 주입되면, 값 캐싱
     const ComponentWithInitialProps = memo(function ComponentWithInitialProps() {
         // Page에 주입될 Props
@@ -17,8 +20,13 @@ export function withInitialPropsWhenMount({
         const location = useLocation()
         const navigate = useNavigate()
 
+        const componentPropsCacheKey = `${Component.name}_${location.pathname}`
+
         const shouldLoadInitialProps = useMemo(function checkShouldLoadInitialProps() {
-            return Boolean(getInitialProps)
+            if (forceToGetInitialProps) {
+                return true
+            }
+            return !componentPropsCache.get(componentPropsCacheKey) ?? Boolean(getInitialProps)
         }, [])
 
         useEffect(
@@ -51,6 +59,7 @@ export function withInitialPropsWhenMount({
                         }
                         return
                     }
+                    componentPropsCache.set(componentPropsCacheKey, deferredPropsResult.props)
                     setProps(deferredPropsResult.props)
                 }
                 loadInitialProps()
@@ -65,18 +74,18 @@ export function withInitialPropsWhenMount({
         }
 
         // getInitialProps가 없는 경우, 그냥 페이지 렌더링
-        if (!shouldLoadInitialProps) {
+        if (!getInitialProps) {
             return <Component />
         }
 
-        // getInitialProps가 있는 경우, 로딩 여부 확인
-        const readyToRender = shouldLoadInitialProps && props
-        if (!readyToRender) {
+        // getInitialProps가 있는 경우, props가 채워져 있는지 여부 확인
+        const componentProps = componentPropsCache.get(componentPropsCacheKey) || props
+        if (!componentProps) {
             return LoadingComponent ? <LoadingComponent /> : null
         }
 
         // getInitialProps를 가지고 와서 props 주입
-        return <Component {...props} />
+        return <Component {...componentProps} />
     })
     return ComponentWithInitialProps
 }
