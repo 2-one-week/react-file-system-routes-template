@@ -1,6 +1,7 @@
-import {PagesWithPath} from '$types/getInitialProps'
-import {memo, useEffect, useMemo, useRef, useState} from 'react'
+import {memo, useEffect, useMemo, useState} from 'react'
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
+
+import {PagesWithPath} from '$types/getInitialProps'
 
 const componentPropsCache = new Map<string, any>()
 
@@ -22,12 +23,16 @@ export function withInitialPropsWhenMount({
 
         const componentPropsCacheKey = `${Component.name}_${location.pathname}`
 
-        const shouldLoadInitialProps = useMemo(function checkShouldLoadInitialProps() {
-            if (forceToGetInitialProps) {
-                return true
-            }
-            return !componentPropsCache.get(componentPropsCacheKey) ?? Boolean(getInitialProps)
-        }, [])
+        const shouldLoadInitialProps = useMemo(
+            function checkShouldLoadInitialProps() {
+                if (forceToGetInitialProps) {
+                    componentPropsCache.delete(componentPropsCacheKey)
+                    return true
+                }
+                return !componentPropsCache.get(componentPropsCacheKey) ?? Boolean(getInitialProps)
+            },
+            [componentPropsCacheKey],
+        )
 
         useEffect(
             function getInitialPropsWhenComponentMount() {
