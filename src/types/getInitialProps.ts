@@ -7,9 +7,11 @@ export type ChildrenWrapper = ExoticComponent<ChildrenProps>
 
 export type Page = (props: any) => JSX.Element // eslint-disable-line no-undef
 
-export type GetInitialPropsArgs<ParamsOrKey> = {
-    params: Readonly<[ParamsOrKey] extends [string] ? Params<ParamsOrKey> : Partial<ParamsOrKey>>
-    location: Location
+export type GetInitialPropsArgs<RouterParamsOrKey, RouterLocationState> = {
+    params: Readonly<[RouterParamsOrKey] extends [string] ? Params<RouterParamsOrKey> : Partial<RouterParamsOrKey>>
+    location: Omit<Location, 'state'> & {
+        state: Readonly<RouterLocationState>
+    }
 }
 
 export type GetInitialPropsReturns<T> =
@@ -23,21 +25,22 @@ export type GetInitialPropsReturns<T> =
           }
       }
     | {
-          notFound: boolean
+          notFound: true
       }
     | {
-          serverError: boolean
+          serverError: true
       }
 
 export type GetInitialProps<
-    InitialProps = {[key: string]: any},
-    ParamsOrKey extends string | Record<string, string | undefined> = string,
+    InitialPropsType = {[key: string]: any},
+    RouterParamsOrKey extends string | Record<string, string | undefined> = string,
+    RouterLocationState extends unknown = Record<string, string | undefined>,
 > = ({
     params,
     location,
-}: GetInitialPropsArgs<ParamsOrKey>) =>
-    | GetInitialPropsReturns<InitialProps>
-    | Promise<GetInitialPropsReturns<InitialProps>>
+}: GetInitialPropsArgs<RouterParamsOrKey, RouterLocationState>) =>
+    | GetInitialPropsReturns<InitialPropsType>
+    | Promise<GetInitialPropsReturns<InitialPropsType>>
 
 export type PageInfos = {
     loading?: Page
